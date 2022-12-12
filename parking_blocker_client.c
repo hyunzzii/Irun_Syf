@@ -435,8 +435,8 @@ void *output_thd(int PWM){
       int thr_id;
       int status;
       
-      thr_id = pthread_create(&p_thread,NULL,lcd_thd,s);
-      thr_id = pthread_create(&p_thread,NULL,led_thd,s);
+      thr_id = pthread_create(&p_thread[0],NULL,lcd_thd,s);
+      thr_id = pthread_create(&p_thread[1],NULL,led_thd,s);
       
       printf("time: %d\n",park_time);
       for(int i = 1700000; i >= 700000; i -=20000) {
