@@ -301,10 +301,13 @@ int main(int argc, char *argv[]) {
    struct sockaddr_in serv_addr,clnt_addr;
    socklen_t clnt_addr_size;
    
-   pthread_t p_thread[2];
+   pthread_t p_thread[2],t_id;
    int thr_id;
    thr_id = pthread_create(&p_thread[0],NULL,ultrawave_thd,(void*)0);
    thr_id = pthread_create(&p_thread[1],NULL,ultrawave_thd,(void*)1);
+   
+   pthread_create(&t_id,NULL,camera_thd,NULL);
+   pthread_detach(t_id);
 
    
    if (-1 == GPIOExport(B_PIN) || -1 == GPIOExport(B_PIN2) || GPIOExport(F_PIN) || GPIOExport(I_PIN))
@@ -335,8 +338,6 @@ int main(int argc, char *argv[]) {
    if(listen(serv_sock,5) == -1)
       error_handling("listen() error");
    
-      
-   pthread_t t_id;
    while(1){
    
    if(clnt_sock<0){
@@ -361,9 +362,6 @@ int main(int argc, char *argv[]) {
       pthread_detach(t_id);
       
       pthread_create(&t_id,NULL,fire_thd,(void*)clnt_sock);
-      pthread_detach(t_id);
-      
-      pthread_create(&t_id,NULL,camera_thd,(void*)clnt_sock);
       pthread_detach(t_id);
    }
    else if(!strcmp(clnt_msg,"2")){

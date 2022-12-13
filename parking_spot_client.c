@@ -285,7 +285,7 @@ void error_handling(char *message){
     exit(1);
 }
 
-void *led(){
+void *led_thd(){
      //Enable GPIO pins
     if (-1 == GPIOExport(R1) || -1 == GPIOExport(R2)|| -1 == GPIOExport(R3)|| -1 == GPIOExport(R4))
         return(1);

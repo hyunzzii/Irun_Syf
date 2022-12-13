@@ -495,7 +495,7 @@ void *reading_4(){
     pthread_exit(0);
 }
 
-void *reservation(){
+void *reservation_thd(){
     char input;
     char full[5] = "2222";
     
